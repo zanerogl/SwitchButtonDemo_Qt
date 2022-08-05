@@ -91,7 +91,7 @@ void SwitchControl::paintEvent(QPaintEvent *event)
 void SwitchControl::resizeEvent(QResizeEvent *event)
 {
     m_nX = 0;
-    m_nY = 0;
+    m_nY = this->height()- this->width();
 //    m_nX = m_nHeight / 2;
 //    m_nY = m_nHeight / 2;
     QWidget::resizeEvent(event);
@@ -114,16 +114,29 @@ void SwitchControl::mouseReleaseEvent(QMouseEvent *event)
 // 切换状态 - 滑动
 void SwitchControl::onTimeout()
 {
-    if (m_bChecked)
-    {
-        m_nY += 1;
-        if (m_nY >= this->height() - this->width())
-        {
-            m_timer.stop();
-        }
+    /*从上到下*/
+//    if (m_bChecked)
+//    {
+//        m_nY += 1;
+//        if (m_nY >= this->height() - this->width())
+//        {
+//            m_timer.stop();
+//        }
 
-    }
-    else
+//    }
+//    else
+//    {
+//        m_nY -= 1;
+//        if (m_nY <= 0)
+//        {
+//            m_timer.stop();
+//            qDebug()<<m_nX<<m_nY;
+//        }
+
+//    }
+
+    /*从下到上*/
+    if (m_bChecked)
     {
         m_nY -= 1;
         if (m_nY <= 0)
@@ -132,6 +145,14 @@ void SwitchControl::onTimeout()
             qDebug()<<m_nX<<m_nY;
         }
 
+    }
+    else
+    {
+        m_nY += 1;
+        if (m_nY >= this->height() - this->width())
+        {
+            m_timer.stop();
+        }
     }
     update();
 }
